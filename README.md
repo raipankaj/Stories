@@ -1,5 +1,5 @@
 # Stories
-[![](https://jitpack.io/v/raipankaj/Stories.svg)](https://jitpack.io/#raipankaj/Stories)
+[![](https://jitpack.io/v/raipankaj/Stories.svg)](https://www.youtube.com/c/AllTechies)
 
 Create stories with Jetpack Compose!
 
