@@ -71,4 +71,4 @@ Based on your app theme and requirement it's extremely easy to modify the Storie
 [![Demo](https://github.com/raipankaj/Stories/blob/main/stories_gif.gif)](https://youtu.be/d0_tH6FfWuo)
 
 <br>
-Note: If you like this library, then please hit the start button! :smiley:
+Note: If you like this library, then please hit the star button! :smiley:
