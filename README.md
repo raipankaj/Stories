@@ -67,8 +67,8 @@ fun Stories(
 <br>
 Based on your app theme and requirement it's extremely easy to modify the Stories composable with the set of parameters.
 
-[![Demo](https://github.com/raipankaj/Stories/blob/main/stories.mp4)](https://github.com/raipankaj/Stories/blob/main/stories.mp4)
+<br>
+[![Demo](https://github.com/raipankaj/Stories/blob/main/stories_gif.gif)](https://youtu.be/d0_tH6FfWuo)
 
-
-<br><br>
-Note: If you like this library then please don't forget to hit the star button! :smiley:
+<br>
+Note: If you like this library, then please hit the start button! :smiley:
