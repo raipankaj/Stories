@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
@@ -16,9 +17,10 @@ import com.ui.simplestories.components.LinearIndicator
 import com.ui.simplestories.components.StoryImage
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class,ExperimentalComposeUiApi::class)
 @Composable
 fun Stories(
+    listOfPages: Int,
     indicatorModifier: Modifier = Modifier
         .padding(top = 12.dp, bottom = 12.dp)
         .clip(RoundedCornerShape(12.dp)),
@@ -27,7 +29,7 @@ fun Stories(
     indicatorProgressColor: Color = Color.White,
     indicatorBackgroundGradientColors: List<Color> = emptyList(),
     slideDurationInSeconds: Long = 5,
-    listOfPages: Int,
+    touchToPause: Boolean = true,
     content: @Composable (Int) -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = listOfPages)
@@ -36,10 +38,16 @@ fun Stories(
     var currentPage by remember {
         mutableStateOf(0)
     }
+    var pauseTimer by remember {
+        mutableStateOf(false)
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         //Full screen content behind the indicator
-        StoryImage(pagerState = pagerState, content)
+        StoryImage(pagerState = pagerState, onTap = {
+            if (touchToPause)
+                pauseTimer = it
+        }, content)
 
         //Indicator based on the number of items
         Row(
@@ -63,7 +71,8 @@ fun Stories(
                     index == currentPage,
                     indicatorBackgroundColor,
                     indicatorProgressColor,
-                    slideDurationInSeconds
+                    slideDurationInSeconds,
+                    pauseTimer,
                 ) {
                     coroutineScope.launch {
                         if (currentPage < listOfPages - 1) {

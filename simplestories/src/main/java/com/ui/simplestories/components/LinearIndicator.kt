@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 
 @Composable
 fun LinearIndicator(modifier: Modifier,
@@ -19,6 +20,7 @@ fun LinearIndicator(modifier: Modifier,
                     indicatorBackgroundColor: Color,
                     indicatorProgressColor: Color,
                     slideDurationInSeconds: Long,
+                    onPauseTimer: Boolean = false,
                     onAnimationEnd: () -> Unit) {
 
     val delayInMillis = rememberSaveable {
@@ -32,14 +34,17 @@ fun LinearIndicator(modifier: Modifier,
     val animatedProgress by animateFloatAsState(targetValue = progress,
         animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec)
 
+
     if (startProgress) {
-        LaunchedEffect(key1 = Unit) {
-            while (progress < 1f) {
+        LaunchedEffect(key1 = onPauseTimer) {
+            while (progress < 1f && isActive && onPauseTimer.not()) {
                 progress += 0.01f
                 delay(delayInMillis)
             }
 
-            onAnimationEnd()
+            //When the timer is not paused and animation completes then move to next page.
+            if (onPauseTimer.not())
+                onAnimationEnd()
         }
     }
 
