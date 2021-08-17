@@ -44,6 +44,7 @@ fun LinearIndicator(modifier: Modifier,
 
             //When the timer is not paused and animation completes then move to next page.
             if (onPauseTimer.not())
+                delay(200)
                 onAnimationEnd()
         }
     }

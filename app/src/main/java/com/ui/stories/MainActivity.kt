@@ -39,12 +39,10 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting() {
-    val listOfImages = listOf(R.drawable.zoo_one, R.drawable.zoo_two)
+    val listOfImages = listOf(R.drawable.zoo_one, R.drawable.zoo_two, R.drawable.zoo_three)
 
-    Box(modifier = Modifier.height(350.dp).fillMaxWidth()) {
-        Stories(listOfPages = listOfImages.size) {
-            Image(painter = painterResource(id = listOfImages[it]), contentDescription = null,
-                contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        }
+    Stories(numberOfPages = listOfImages.size, onComplete = { }) { index ->
+        Image(painter = painterResource(id = listOfImages[index]), contentDescription = null,
+            contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
     }
 }

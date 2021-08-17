@@ -1,5 +1,6 @@
 package com.ui.simplestories
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPagerApi::class,ExperimentalComposeUiApi::class)
 @Composable
 fun Stories(
-    listOfPages: Int,
+    numberOfPages: Int,
     indicatorModifier: Modifier = Modifier
         .padding(top = 12.dp, bottom = 12.dp)
         .clip(RoundedCornerShape(12.dp)),
@@ -30,9 +31,10 @@ fun Stories(
     indicatorBackgroundGradientColors: List<Color> = emptyList(),
     slideDurationInSeconds: Long = 5,
     touchToPause: Boolean = true,
-    content: @Composable (Int) -> Unit
+    onComplete: () -> Unit,
+    content: @Composable (Int) -> Unit,
 ) {
-    val pagerState = rememberPagerState(pageCount = listOfPages)
+    val pagerState = rememberPagerState(pageCount = numberOfPages)
     val coroutineScope = rememberCoroutineScope()
 
     var currentPage by remember {
@@ -65,7 +67,7 @@ fun Stories(
         ) {
             Spacer(modifier = Modifier.padding(spaceBetweenIndicator))
 
-            for (index in 0 until listOfPages) {
+            for (index in 0 until numberOfPages) {
                 LinearIndicator(
                     modifier = indicatorModifier.weight(1f),
                     index == currentPage,
@@ -75,11 +77,17 @@ fun Stories(
                     pauseTimer,
                 ) {
                     coroutineScope.launch {
-                        if (currentPage < listOfPages - 1) {
-                            currentPage++
+
+                        currentPage++
+
+                        if (currentPage < numberOfPages) {
+                            pagerState.animateScrollToPage(currentPage)
                         }
 
-                        pagerState.animateScrollToPage(currentPage)
+                        if (currentPage == numberOfPages) {
+                            onComplete()
+                        }
+
                     }
                 }
 
