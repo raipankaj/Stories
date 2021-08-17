@@ -1,4 +1,4 @@
-# Stories
+# Stories UI
 [![](https://jitpack.io/v/raipankaj/Stories.svg)](https://www.youtube.com/c/AllTechies)
 
 Create stories with Jetpack Compose!
@@ -34,14 +34,14 @@ dependencyResolutionManagement {
 
 Once you have added the maven url now add the Stories dependency in the <b>build.gradle (module level)</b>
 ```groovy
-implementation 'com.github.raipankaj:Stories:1.0.0'
+implementation 'com.github.raipankaj:Stories:1.0.1'
 ```
 
 Congratulations, you have successfully added the dependency. 
 Now to get started with Stories add the following code snippet
 ```kotlin
 val listOfImages = listOf(R.drawable.mountains, R.drawable.forest)
-Stories(listOfPages = listOfImages.size) {
+Stories(numberOfPages = listOfImages.size, onComplete = { }) {
     Image(painter = painterResource(id = listOfImages[it]), contentDescription = null,
     contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
 }
@@ -53,7 +53,7 @@ Here are all the parameters accepted by Stories composable.
 ```kotlin
 @Composable
 fun Stories(
-    listOfPages: Int,
+    numberOfPages: Int,
     indicatorModifier: Modifier = Modifier.padding(top = 12.dp, bottom = 12.dp).clip(RoundedCornerShape(12.dp)),
     spaceBetweenIndicator: Dp = 4.dp,
     indicatorBackgroundColor: Color = Color.LightGray,
@@ -61,6 +61,7 @@ fun Stories(
     indicatorBackgroundGradientColors: List<Color> = emptyList(),
     slideDurationInSeconds: Long = 5,
     touchToPause: Boolean = true,
+    onComplete: () -> Unit,
     content: @Composable (Int) -> Unit
 )
 ```
