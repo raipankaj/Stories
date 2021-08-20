@@ -34,7 +34,7 @@ dependencyResolutionManagement {
 
 Once you have added the maven url now add the Stories dependency in the <b>build.gradle (module level)</b>
 ```groovy
-implementation 'com.github.raipankaj:Stories:1.0.1'
+implementation 'com.github.raipankaj:Stories:1.0.2'
 ```
 
 Congratulations, you have successfully added the dependency. 
@@ -51,7 +51,6 @@ Stories composable provide an ability to change the color of progress indicator 
 Here are all the parameters accepted by Stories composable.
 
 ```kotlin
-@Composable
 fun Stories(
     numberOfPages: Int,
     indicatorModifier: Modifier = Modifier.padding(top = 12.dp, bottom = 12.dp).clip(RoundedCornerShape(12.dp)),
@@ -61,8 +60,10 @@ fun Stories(
     indicatorBackgroundGradientColors: List<Color> = emptyList(),
     slideDurationInSeconds: Long = 5,
     touchToPause: Boolean = true,
+    hideIndicators: Boolean = false,
+    onEveryStoryChange: ((Int) -> Unit)? = null,
     onComplete: () -> Unit,
-    content: @Composable (Int) -> Unit
+    content: @Composable (Int) -> Unit,
 )
 ```
 <br>
