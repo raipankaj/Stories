@@ -21,6 +21,7 @@ fun LinearIndicator(modifier: Modifier,
                     indicatorProgressColor: Color,
                     slideDurationInSeconds: Long,
                     onPauseTimer: Boolean = false,
+                    hideIndicators: Boolean = false,
                     onAnimationEnd: () -> Unit) {
 
     val delayInMillis = rememberSaveable {
@@ -43,18 +44,21 @@ fun LinearIndicator(modifier: Modifier,
             }
 
             //When the timer is not paused and animation completes then move to next page.
-            if (onPauseTimer.not())
+            if (onPauseTimer.not()) {
                 delay(200)
                 onAnimationEnd()
+            }
         }
     }
 
-    LinearProgressIndicator(
-        backgroundColor = indicatorBackgroundColor,
-        color = indicatorProgressColor,
-        modifier = modifier
-            .padding(top = 12.dp, bottom = 12.dp)
-            .clip(RoundedCornerShape(12.dp)),
-        progress = animatedProgress
-    )
+    if (hideIndicators.not()) {
+        LinearProgressIndicator(
+            backgroundColor = indicatorBackgroundColor,
+            color = indicatorProgressColor,
+            modifier = modifier
+                .padding(top = 12.dp, bottom = 12.dp)
+                .clip(RoundedCornerShape(12.dp)),
+            progress = animatedProgress
+        )
+    }
 }
